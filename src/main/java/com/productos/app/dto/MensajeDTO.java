@@ -1,9 +1,9 @@
 package com.productos.app.dto;
 
-public class Mensaje {
+public class MensajeDTO {
     private String mensaje;
 
-    public Mensaje(String mensaje) {
+    public MensajeDTO(String mensaje) {
         this.mensaje = mensaje;
     }
 
