@@ -22,6 +22,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -32,16 +33,12 @@ public class AuthController {
 
 	@Autowired
 	PasswordEncoder passwordEncoder;
-	
 	@Autowired
 	AuthenticationManager authenticationManager;
-	
 	@Autowired
 	UsuarioService usuarioService;
-	
 	@Autowired
 	RolService rolService;
-	
 	@Autowired
 	JwtProvider jwtProvider;
 	
@@ -106,7 +103,18 @@ public class AuthController {
 		} catch (Exception e) {
 			return new ResponseEntity(new MensajeDTO("Campos mal colocados"), HttpStatus.BAD_REQUEST);
 		}
+	}
 
+	@PostMapping("/refresh")
+	public ResponseEntity<Object> refreshToken(@RequestBody JwtDTO jwtDTO) throws ParseException {
+		try {
+			String token = jwtProvider.refreshToken(jwtDTO);
+			JwtDTO jwt = new JwtDTO(token);
+			return new ResponseEntity<Object>(jwt, HttpStatus.OK);
+
+		}catch (Exception e){
+			return new ResponseEntity<Object>(new MensajeDTO(e.getMessage()), HttpStatus.OK);
+		}
 	}
 	
 	
