@@ -4,6 +4,8 @@ import com.productos.app.security.jwt.JwtEntryPoint;
 import com.productos.app.security.jwt.JwtTokenFilter;
 import com.productos.app.security.services.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.config.BeanFactoryPostProcessor;
+import org.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -59,17 +61,22 @@ public class MainSecurity extends WebSecurityConfigurerAdapter{
 	
 		http.cors().and().csrf().disable()
 			.authorizeRequests()
-			.antMatchers("/auth/**").permitAll()
+			.antMatchers("/auth/**", "/error").permitAll()
 			.anyRequest().authenticated()
 			.and()
 			.exceptionHandling().authenticationEntryPoint(jwtEntryPoint)
 			.and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-	
+
+
 		http.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 	}
 
-	
+//	@Bean
+//	static BeanFactoryPostProcessor removeErrorSecurityFilter() {
+//		return (beanFactory) ->
+//				((DefaultListableBeanFactory)beanFactory).removeBeanDefinition("errorPageSecurityInterceptor");
+//	}
 	
 }
 
