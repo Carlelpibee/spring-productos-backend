@@ -23,6 +23,10 @@ public class UsuarioService {
 	public Optional<UsuarioModel> getByNombreUsuarioOrEmail(String nombreUsuarioOrEmail){
 		return usuarioRepository.findByNombreUsuarioOrEmail(nombreUsuarioOrEmail, nombreUsuarioOrEmail);
 	}
+
+	public Optional<UsuarioModel> getByTokenPassword(String tokenPassword){
+		return usuarioRepository.findByTokenPassword(tokenPassword);
+	}
 	
 	public boolean existsByNombreUsuario(String nombreUsuario) {
 		return usuarioRepository.existsByNombreUsuario(nombreUsuario);
@@ -31,9 +35,6 @@ public class UsuarioService {
 	public boolean existsByNombreUsuarioOrEmail(String nombreUsuarioOrEmail) {
 		return usuarioRepository.existsByNombreUsuarioOrEmail(nombreUsuarioOrEmail, nombreUsuarioOrEmail);
 	}
-
-
-
 	public boolean existsByEmail(String email) {
 		return usuarioRepository.existsByEmail(email);
 	}

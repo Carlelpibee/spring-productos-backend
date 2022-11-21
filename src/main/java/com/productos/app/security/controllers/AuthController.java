@@ -30,7 +30,6 @@ import java.util.Set;
 @RequestMapping("/auth")
 @CrossOrigin
 public class AuthController {
-
 	@Autowired
 	PasswordEncoder passwordEncoder;
 	@Autowired
