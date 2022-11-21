@@ -83,7 +83,7 @@ public class AuthController {
 			return new ResponseEntity(new MensajeDTO("Campos mal colocados"), HttpStatus.BAD_REQUEST);
 		}
 		
-		if(!(usuarioService.existsByNombreUsuario(loginUsuarioDTO.getNombreUsuario()))) {
+		if(!(usuarioService.existsByNombreUsuarioOrEmail(loginUsuarioDTO.getNombreUsuario()))) {
 			return new ResponseEntity(new MensajeDTO("Campos mal colocados"), HttpStatus.BAD_REQUEST);
 		}
 		

@@ -19,12 +19,11 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
 	UsuarioService usuarioService;
 	
-	
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		UsuarioModel usuarioModel = usuarioService.getByNombreUsuario(username).get();
-		
+		System.out.println(usernameOrEmail);
+		UsuarioModel usuarioModel = usuarioService.getByNombreUsuarioOrEmail(usernameOrEmail).get();
 		return UsuarioPrincipalModel.build(usuarioModel);
 	}
 

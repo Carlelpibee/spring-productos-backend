@@ -10,16 +10,13 @@ public class UsuarioModel {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	
 	private String nombre;
-	
 	@Column(unique = true)
 	private String nombreUsuario;
-	
 	private String email;
-	
 	private String password;
-	
+	@Column(name="token")
+	private String tokenPassword;
 	@ManyToMany(fetch=FetchType.EAGER)
 	
 	@JoinTable(name="usuario_roles", joinColumns = @JoinColumn(name = "id_usuario"), inverseJoinColumns = @JoinColumn(name = "id_rol"))
@@ -77,16 +74,23 @@ public class UsuarioModel {
 		this.password = password;
 	}
 
+	public String getTokenPassword() {
+		return tokenPassword;
+	}
+
+	public void setTokenPassword(String tokenPassword) {
+		this.tokenPassword = tokenPassword;
+	}
+
 	public Set<RolModel> getRoles() {
 		return roles;
 	}
 
 	public void setRoles(Set<RolModel> roles) {
 		this.roles = roles;
-	} 
+	}
 
-	
-	
+
 }
 
 
