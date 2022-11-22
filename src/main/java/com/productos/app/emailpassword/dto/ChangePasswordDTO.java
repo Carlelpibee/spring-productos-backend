@@ -3,7 +3,6 @@ package com.productos.app.emailpassword.dto;
 import javax.validation.constraints.NotBlank;
 
 public class ChangePasswordDTO {
-
     @NotBlank
     private String password;
     @NotBlank
