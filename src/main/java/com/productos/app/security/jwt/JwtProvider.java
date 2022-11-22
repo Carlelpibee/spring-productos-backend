@@ -56,10 +56,8 @@ public class JwtProvider {
 	
 	public boolean validateToken(String token) {
 		try {
-			
 			Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(token);
 			return true;
-			
 		} catch (MalformedJwtException e) {
 			logger.error("Token mal formado");
 			
@@ -81,21 +79,26 @@ public class JwtProvider {
 
 	//neww
 	public String refreshToken(JwtDTO jwtDTO) throws ParseException {
-		JWT jwt = JWTParser.parse(jwtDTO.getToken());
-		JWTClaimsSet claims = jwt.getJWTClaimsSet();
-		String nombreUsuario = claims.getSubject();
-		List<String> roles = (List<String>) claims.getClaim("roles");
 
-		return Jwts.builder()
-				.setSubject(nombreUsuario)
-				.claim("roles", roles)
-				.setIssuedAt(new Date())
-				.setExpiration(new Date(new Date().getTime() + expiration))
-				.signWith(SignatureAlgorithm.HS512, secret.getBytes())
-				.compact();
+		try {
+			Jwts.parser().setSigningKey(secret.getBytes()).parseClaimsJws(jwtDTO.getToken());
+
+		}catch (ExpiredJwtException e){
+			JWT jwt = JWTParser.parse(jwtDTO.getToken());
+			JWTClaimsSet claims = jwt.getJWTClaimsSet();
+			String nombreUsuario = claims.getSubject();
+			List<String> roles = (List<String>) claims.getClaim("roles");
+
+			return Jwts.builder()
+					.setSubject(nombreUsuario)
+					.claim("roles", roles)
+					.setIssuedAt(new Date())
+					.setExpiration(new Date(new Date().getTime() + expiration))
+					.signWith(SignatureAlgorithm.HS512, secret.getBytes())
+					.compact();
+		}
+		return null;
 	}
-	
-	
 }
 
 
