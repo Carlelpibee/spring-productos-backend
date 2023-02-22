@@ -12,5 +12,4 @@ public interface RolRepository extends JpaRepository<RolModel, Integer>{
 	
 	Optional<RolModel> findByRolNombre(RolNombre rolNombre);
 	
-	
 }

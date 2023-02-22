@@ -24,4 +24,9 @@ public class RolService {
 	public void save(RolModel rolModel) {
 		rolRepository.save(rolModel);
 	}
+
+	public Boolean existsByRolNombre(RolNombre rolNombre) {
+		Optional<RolModel> rolOptional = rolRepository.findByRolNombre(rolNombre);
+		return rolOptional.isPresent();
+	}
 }
